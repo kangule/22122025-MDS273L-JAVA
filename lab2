@@ -1,0 +1,38 @@
+public class lab2 {
+    public static void main(String[] args){
+        char names[MAX_NAME][MAX_INPUT];
+int count = 0;
+
+void enterName(void);
+void searchName(void);
+void removeName(void);
+
+int main()
+{
+    int choice;
+
+    do
+    {
+        printf("\nMain Menu\n");
+        printf("1. Enter a name\n");
+        printf("2. Search for a name\n");
+        printf("3. Remove a name\n");
+        printf("4. Exit\n");
+        printf("Enter your choice: ");
+        scanf("%d", &choice);
+
+        switch (choice)
+        {
+            case 1:
+                enterName();
+                break;
+            case 2:
+                searchName();
+                break;
+            case 3:
+                removeName();
+                break;
+            case 4:
+                printf("Exiting....\n");
+                exit(0);
+           
