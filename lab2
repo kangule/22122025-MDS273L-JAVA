@@ -1,38 +1,87 @@
-public class lab2 {
-    public static void main(String[] args){
-        char names[MAX_NAME][MAX_INPUT];
-int count = 0;
+import java.util.Scanner;
 
-void enterName(void);
-void searchName(void);
-void removeName(void);
+class NameSearch {
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+        String[] names = new String[1024];
+        Boolean flag = false;
+        int ii = 0;
+        do {
 
-int main()
-{
-    int choice;
+            flag = true;
+            System.out.println("########### MENU ###########");
+            System.out.println("## 1. Enter the name:    ###");
+            System.out.println("## 2. Search for a name: ###");
+            System.out.println("## 3. Remove a name:    ####");
+            System.out.println("## 4. Print the name list ##");
+            System.out.println("## 5. Quit              ####");
+            System.out.println("############################");
+            System.out.println("Enter your choice: ");
+            int inp = Integer.parseInt(sc.nextLine());
 
-    do
-    {
-        printf("\nMain Menu\n");
-        printf("1. Enter a name\n");
-        printf("2. Search for a name\n");
-        printf("3. Remove a name\n");
-        printf("4. Exit\n");
-        printf("Enter your choice: ");
-        scanf("%d", &choice);
+            switch (inp) {
+                case 1: {
+                    
+                    System.out.print("Enter your name: ");
+                    names[ii] = sc.nextLine();
+                    ii++;
+                    break;
 
-        switch (choice)
-        {
-            case 1:
-                enterName();
-                break;
-            case 2:
-                searchName();
-                break;
-            case 3:
-                removeName();
-                break;
-            case 4:
-                printf("Exiting....\n");
-                exit(0);
-           
+                }
+                case 2:{
+                    int j;
+                    System.out.println("Which name your are searching?.");
+                    String sch = sc.nextLine();
+                    for ( j=0; j < names.length; j++) {
+                        if (sch.equals(names[j])){
+                            System.out.println("Name is found at position "+(j+1));
+                            break;
+
+                        }
+                        
+                    }
+                    break;
+                }
+                case 3:{
+                    int j;
+                    System.out.println("Which name you want to delete. :");
+                    String ntemp = sc.nextLine();
+                    for ( j=0; j < names.length; j++) {
+                        if (ntemp.equals(names[j])){
+                            for (; j < names.length-1; j++) {
+                                names[j]=names[j+1];
+                                
+                            }
+
+                        }
+                        
+                    }
+                    break;
+
+
+                }
+                case 4:{
+                    System.out.println("Your list are: ");
+                    for (String a:names){
+                        if(a!=null){
+                            System.out.print(a+",");
+                        }
+                       
+                    }
+                    System.out.println();
+                    break;
+                }
+                case 5:{
+
+                    System.out.println("Program will now wxit in 3.2.1..");
+                    flag=false;
+                    break;
+                }
+
+
+            }
+
+        } while (flag);
+
+    }
+}
