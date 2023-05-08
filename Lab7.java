@@ -1,54 +1,56 @@
-import java.io.BufferedReader;
-import java.io.FileReader;
-import java.io.FileWriter;
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Collections;
+import java.io.File;
+import java.util.Scanner;
 
-public class Lab7 {
+class lab7 {
+
+    static float mean(String[] arr) {
+        float sum = 0;
+        for(int i=0;i< arr.length;i++){
+            sum += Float.parseFloat(arr[i]);
+        }
+        return sum/arr.length;
+    }
 
     public static void main(String[] args) {
-        // Load the iris dataset
-        ArrayList<Double> sepalLengthList = new ArrayList<Double>();
-        ArrayList<Double> sepalWidthList = new ArrayList<Double>();
-        ArrayList<Double> petalLengthList = new ArrayList<Double>();
-        ArrayList<Double> petalWidthList = new ArrayList<Double>();
+
         try {
-            BufferedReader reader = new BufferedReader(new FileReader("iris.data"));
-            String line = reader.readLine();
-            while (line != null) {
-                String[] values = line.split(",");
-                sepalLengthList.add(Double.parseDouble(values[0]));
-                sepalWidthList.add(Double.parseDouble(values[1]));
-                petalLengthList.add(Double.parseDouble(values[2]));
-                petalWidthList.add(Double.parseDouble(values[3]));
-                line = reader.readLine();
+            File iris = new File("Iris.csv");
+            Scanner scan = new Scanner(iris);
+
+            String[] header = new String[6];
+            String[][] irisData = new String[150][6];
+            int counter = 0;
+
+            while (scan.hasNextLine()) {
+                // System.out.println(scan.nextLine());
+                if (counter == 0) {
+                    header = scan.nextLine().split(",");
+                } else {
+                    irisData[counter - 1] = scan.nextLine().split(",");
+                }
+                counter += 1;
             }
-            reader.close();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
 
-        // Calculate the overall 5-point summary for the four attributes
-        ArrayList<Double> sepalLengthSorted = new ArrayList<Double>(sepalLengthList);
-        Collections.sort(sepalLengthSorted);
-        ArrayList<Double> sepalWidthSorted = new ArrayList<Double>(sepalWidthList);
-        Collections.sort(sepalWidthSorted);
-        ArrayList<Double> petalLengthSorted = new ArrayList<Double>(petalLengthList);
-        Collections.sort(petalLengthSorted);
-        ArrayList<Double> petalWidthSorted = new ArrayList<Double>(petalWidthList);
-        Collections.sort(petalWidthSorted);
+            for (int row = 0; row < irisData.length; row++) {
+                for (int col = 0; col < irisData[row].length; col++) {
+                    System.out.print("\t" + irisData[row][col]);
+                }
+                System.out.println();
+            }
 
-        double sepalLengthMean = calculateMean(sepalLengthList);
-        double sepalLengthMedian = calculateMedian(sepalLengthSorted);
-        double sepalLengthMin = sepalLengthSorted.get(0);
-        double sepalLengthMax = sepalLengthSorted.get(sepalLengthSorted.size() - 1);
+            for (int i = 1; i <= 4; i++) {
+                System.out.print(header[i] + "\t : \t");
+                String[] temp = new String[150];
+                for (int row = 0; row < irisData.length; row++) {
+                       temp[row] =  irisData[row][i];               
+                }
+                System.out.print(mean(temp));
+                System.out.println("");
+            }
 
-        double sepalWidthMean = calculateMean(sepalWidthList);
-        double sepalWidthMedian = calculateMedian(sepalWidthSorted);
-        double sepalWidthMin = sepalWidthSorted.get(0);
-        double sepalWidthMax = sepalWidthSorted.get(sepalWidthSorted.size() - 1);
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
 
-        double petalLengthMean = calculateMean(petalLengthList);
-        double petalLengthMedian = calculateMedian(petalLengthSorted);
-        double petalLengthMin = petalLengthSorted.get(0);
+    }
+}
